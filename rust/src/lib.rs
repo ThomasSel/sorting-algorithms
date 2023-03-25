@@ -1,4 +1,4 @@
-fn insertion_sort(arr: &Vec<i32>) -> Vec<i32> {
+pub fn insertion_sort(arr: &[i32]) -> Vec<i32> {
     let mut result = Vec::with_capacity(arr.len());
 
     for (number_index, number) in arr.iter().enumerate() {
@@ -16,7 +16,7 @@ fn insertion_sort(arr: &Vec<i32>) -> Vec<i32> {
     return result;
 }
 
-fn selection_sort(arr: &mut Vec<i32>) -> Vec<i32> {
+pub fn selection_sort(arr: &mut Vec<i32>) -> Vec<i32> {
     let mut result = Vec::with_capacity(arr.len());
 
     while arr.len() > 0 {
@@ -37,7 +37,7 @@ fn selection_sort(arr: &mut Vec<i32>) -> Vec<i32> {
     return result;
 }
 
-fn merge_sort(arr: &[i32]) -> Vec<i32> {
+pub fn merge_sort(arr: &[i32]) -> Vec<i32> {
     if arr.len() < 2 {
         return arr.to_vec();
     } else {

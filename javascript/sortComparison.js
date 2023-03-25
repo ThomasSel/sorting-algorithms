@@ -24,26 +24,26 @@ const generateArray = (n, maxNumber = -1) => {
 
 const baseImplementation = (arr) => arr.sort();
 
-const n = 5e6;
-const numTests = 10;
+const n = 1000;
+const numTests = 25;
 
 console.log("=============================");
 console.log(`=        n = ${n}          =`);
 console.log("=============================");
 
-// const selectionSortResult = timeFunction(
-//   () => generateArray(n, n),
-//   selectionSort,
-//   100
-// );
-// console.log(`selectionSort: Avg Time (ms) ${selectionSortResult}`);
-//
-// const insertionSortResult = timeFunction(
-//   () => generateArray(n, n),
-//   insertionSort,
-//   100
-// );
-// console.log(`insertionSort: Avg Time (ms) ${insertionSortResult}`);
+const selectionSortResult = timeFunction(
+  () => generateArray(n, n),
+  selectionSort,
+  numTests
+);
+console.log(`selectionSort: Avg Time (ms) ${selectionSortResult}`);
+
+const insertionSortResult = timeFunction(
+  () => generateArray(n, n),
+  insertionSort,
+  numTests
+);
+console.log(`insertionSort: Avg Time (ms) ${insertionSortResult}`);
 
 const mergeSortResult = timeFunction(
   () => generateArray(n, n),
