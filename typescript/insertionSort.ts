@@ -1,5 +1,5 @@
-const insertionSort = (arr: Number[]): Number[] => {
-  const result: Number[] = [];
+const insertionSort = (arr: number[]): number[] => {
+  const result: number[] = [];
 
   arr.forEach((element) => {
     let insertionIndex = result.length;
