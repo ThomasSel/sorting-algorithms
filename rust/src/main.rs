@@ -1,45 +1,36 @@
 use rand::distributions::{Distribution, Uniform};
 use std::time::{Duration, Instant};
 
-use sorting::*;
+// use sorting::*;
 
-const N: usize = 10000;
+mod insertion_sort;
+mod merge_sort;
+mod selection_sort;
+
+const N: usize = 1000;
 const NUM_TESTS: usize = 25;
-
-enum SortingFunction {
-    Slice(Box<dyn Fn(&[i32]) -> Vec<i32>>),
-    MutVec(Box<dyn Fn(&mut Vec<i32>) -> Vec<i32>>),
-}
 
 fn main() {
     println!(
         "selection_sort: Avg Time (ms) {}",
-        run_test(SortingFunction::MutVec(Box::new(selection_sort))).as_micros() as f32 / 1000.0
+        run_test(Box::new(selection_sort::copy)).as_micros() as f32 / 1000.0
     );
     println!(
         "insertion_sort: Avg Time (ms) {}",
-        run_test(SortingFunction::Slice(Box::new(insertion_sort))).as_micros() as f32 / 1000.0
+        run_test(Box::new(insertion_sort::copy)).as_micros() as f32 / 1000.0
     );
     println!(
         "merge_sort: Avg Time (ms) {}",
-        run_test(SortingFunction::Slice(Box::new(merge_sort))).as_micros() as f32 / 1000.0
+        run_test(Box::new(merge_sort::copy)).as_micros() as f32 / 1000.0
     );
 }
 
-fn run_test(sorting_function: SortingFunction) -> Duration {
+fn run_test(sorting_function: Box<dyn Fn(&[i32]) -> Vec<i32>>) -> Duration {
     let start = Instant::now();
 
     for _ in 0..NUM_TESTS {
-        match sorting_function {
-            SortingFunction::Slice(ref sort) => {
-                let arr = generate_random_vec(N);
-                sort(&arr)
-            }
-            SortingFunction::MutVec(ref sort) => {
-                let mut arr = generate_random_vec(N);
-                sort(&mut arr)
-            }
-        };
+        let arr = generate_random_vec(N);
+        sorting_function(&arr);
     }
 
     return start.elapsed() / NUM_TESTS.try_into().unwrap();
