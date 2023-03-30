@@ -3,6 +3,7 @@ use std::time::{Duration, Instant};
 
 // use sorting::*;
 
+mod binary_tree;
 mod insertion_sort;
 mod merge_sort;
 mod selection_sort;
