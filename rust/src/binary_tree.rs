@@ -34,6 +34,16 @@ impl<'a, T> BinaryTree<'a, T> {
             return None;
         }
     }
+
+    fn build_array(&self, arr: &mut Vec<&'a T>, index: usize) {
+        arr[index] = self.value;
+        if let Some(left) = &*self.left {
+            left.build_array(arr, index * 2 + 1);
+        }
+        if let Some(right) = &*self.right {
+            right.build_array(arr, index * 2 + 2);
+        }
+    }
 }
 
 impl<'a, T: PartialEq> BinaryTree<'a, T> {
@@ -53,9 +63,15 @@ impl<'a, T: PartialEq> BinaryTree<'a, T> {
     }
 }
 
-impl<'a, T> Into<&'a [T]> for BinaryTree<'a, T> {
-    fn into(self) -> &'a [T] {
-        unimplemented!();
+impl<'a, T> Into<Vec<&'a T>> for BinaryTree<'a, T> {
+    fn into(self) -> Vec<&'a T> {
+        let mut arr = Vec::with_capacity(self.length());
+        for _ in 0..self.length() {
+            arr.push(self.value);
+        }
+
+        self.build_array(&mut arr, 0);
+        return arr;
     }
 }
 
@@ -139,5 +155,17 @@ mod tests {
         let tree = BinaryTree::build(&arr);
 
         assert!(tree.is_none());
+    }
+
+    #[test]
+    fn binary_tree_into_array() {
+        let arr = vec![4, 3, 1, 5, 0, 1];
+        let result = vec![&4, &3, &1, &5, &0, &1];
+
+        let tree = BinaryTree::build(&arr).unwrap();
+
+        let generated_arr: Vec<&i32> = tree.into();
+
+        assert_eq!(&result[..], &generated_arr[..]);
     }
 }
