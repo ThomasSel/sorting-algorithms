@@ -34,7 +34,7 @@ export const insertionSortInPlace = (
 
     let insertionIndex: number;
     for (insertionIndex = 0; insertionIndex < sortedSize; insertionIndex++) {
-      if (comp(arr[insertionIndex], number)) {
+      if (comp(number, arr[insertionIndex])) {
         break;
       }
     }
