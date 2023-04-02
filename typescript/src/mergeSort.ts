@@ -1,4 +1,4 @@
-const mergeSort = (arr: number[]): number[] => {
+export const mergeSort = (arr: number[]): number[] => {
   if (arr.length < 2) {
     return arr;
   } else {
