@@ -1,4 +1,4 @@
-const insertionSort = (arr: number[]): number[] => {
+export const insertionSort = (arr: number[]): number[] => {
   const result: number[] = [];
 
   arr.forEach((element) => {
@@ -22,6 +22,30 @@ const insertionSort = (arr: number[]): number[] => {
   });
 
   return result;
+};
+
+export const insertionSortInPlace = (
+  arr: number[],
+  comp: (a: number, b: number) => boolean = (a, b) => a < b,
+  update: () => void = () => {}
+): void => {
+  for (let sortedSize: number = 0; sortedSize < arr.length; sortedSize++) {
+    const number = arr[sortedSize];
+
+    let insertionIndex: number;
+    for (insertionIndex = 0; insertionIndex < sortedSize; insertionIndex++) {
+      if (comp(arr[insertionIndex], number)) {
+        break;
+      }
+    }
+
+    for (let i = sortedSize; i > insertionIndex; i--) {
+      arr[i] = arr[i - 1];
+    }
+
+    arr[insertionIndex] = number;
+    update();
+  }
 };
 
 export default insertionSort;
