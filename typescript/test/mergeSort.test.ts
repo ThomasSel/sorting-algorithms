@@ -1,4 +1,4 @@
-import { mergeSort } from "../src/mergeSort";
+import { mergeSort, mergeSortInPlace } from "../src/mergeSort";
 import { isSorted, generateArray } from "./utils";
 
 const N = 1000;
@@ -20,6 +20,25 @@ describe("mergeSort", () => {
         const sortedArr = mergeSort(arr);
 
         expect(isSorted(sortedArr)).toEqual(true);
+      }
+    });
+  });
+
+  describe("in place", () => {
+    it("sorts a small array", () => {
+      const arr = [13, 24, 5, 2, 1, 5, 664];
+      mergeSortInPlace(arr);
+
+      expect(arr).toEqual([1, 2, 5, 5, 13, 24, 664]);
+      expect(isSorted(arr)).toEqual(true);
+    });
+
+    it("sorts large random arrays", () => {
+      for (let _ = 0; _ < numTests; _++) {
+        const arr = generateArray(N);
+        mergeSortInPlace(arr);
+
+        expect(isSorted(arr)).toEqual(true);
       }
     });
   });

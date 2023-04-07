@@ -30,4 +30,55 @@ export const mergeSort = (arr: number[]): number[] => {
   }
 };
 
+export const mergeSortInPlace = (
+  arr: number[],
+  start: number = 0,
+  end: number = arr.length,
+  comp: (a: number, b: number) => boolean = (a, b) => a < b,
+  update: () => void = () => {}
+): void => {
+  const sliceLength = end - start;
+
+  if (sliceLength < 2) {
+    return;
+  }
+
+  // sort left and right arrays
+  mergeSortInPlace(
+    arr,
+    start,
+    start + Math.floor(sliceLength / 2),
+    comp,
+    update
+  );
+  mergeSortInPlace(arr, start + Math.floor(sliceLength / 2), end, comp, update);
+
+  // temp array to store merged sub arrays
+  const temp: number[] = [];
+  let leftIndex = start;
+  let rightIndex = start + Math.floor(sliceLength / 2);
+
+  while (leftIndex < start + Math.floor(sliceLength / 2) || rightIndex < end) {
+    const leftValue =
+      leftIndex >= start + Math.floor(sliceLength / 2)
+        ? Infinity
+        : arr[leftIndex];
+    const rightValue = rightIndex >= end ? Infinity : arr[rightIndex];
+
+    if (leftValue <= rightValue) {
+      temp.push(leftValue);
+      leftIndex++;
+    } else {
+      temp.push(rightValue);
+      rightIndex++;
+    }
+  }
+
+  for (let i = 0; i < sliceLength; i++) {
+    arr[start + i] = temp[i];
+  }
+
+  update();
+};
+
 export default mergeSort;
