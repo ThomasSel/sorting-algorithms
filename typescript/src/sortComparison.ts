@@ -1,8 +1,8 @@
-import selectionSort from "./selectionSort";
-import insertionSort from "./insertionSort";
-import mergeSort from "./mergeSort";
+import { selectionSort, selectionSortInPlace } from "./selectionSort";
+import { insertionSort, insertionSortInPlace } from "./insertionSort";
+import { mergeSort, mergeSortInPlace } from "./mergeSort";
 
-const N = 1000;
+const N = 10000;
 const NUM_TESTS = 25;
 
 const generateArray = (n: number): number[] => {
@@ -36,10 +36,33 @@ console.log("=========================");
 console.log(`=      n = ${N}      =`);
 console.log("=========================");
 
-const insertionSortTime = timeSortingFunction(insertionSort);
-const selectionSortTime = timeSortingFunction(selectionSort);
-const mergeSortTime = timeSortingFunction(mergeSort);
+const normalTimes = {
+  insertionSort: timeSortingFunction(insertionSort),
+  selectionSort: timeSortingFunction(selectionSort),
+  mergeSort: timeSortingFunction(mergeSort),
+};
 
-console.log(`insertionSort: Avg Time (ms) ${insertionSortTime}`);
-console.log(`selectionSort: Avg Time (ms) ${selectionSortTime}`);
-console.log(`mergeSort: Avg Time (ms) ${mergeSortTime}`);
+const inPlaceTimes = {
+  insertionSort: timeSortingFunction((arr) => {
+    insertionSortInPlace(arr);
+    return arr;
+  }),
+  selectionSort: timeSortingFunction((arr) => {
+    selectionSortInPlace(arr);
+    return arr;
+  }),
+  mergeSort: timeSortingFunction((arr) => {
+    mergeSortInPlace(arr);
+    return arr;
+  }),
+};
+
+console.log("NORMAL TIMES");
+console.log(`insertionSort: Avg Time (ms) ${normalTimes.insertionSort}`);
+console.log(`selectionSort: Avg Time (ms) ${normalTimes.selectionSort}`);
+console.log(`mergeSort: Avg Time (ms) ${normalTimes.mergeSort}`);
+
+console.log("IN PLACE TIMES");
+console.log(`insertionSort: Avg Time (ms) ${inPlaceTimes.insertionSort}`);
+console.log(`selectionSort: Avg Time (ms) ${inPlaceTimes.selectionSort}`);
+console.log(`mergeSort: Avg Time (ms) ${inPlaceTimes.mergeSort}`);
