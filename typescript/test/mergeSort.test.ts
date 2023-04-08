@@ -20,6 +20,9 @@ describe("mergeSort", () => {
         const sortedArr = mergeSort(arr);
 
         expect(isSorted(sortedArr)).toEqual(true);
+
+        arr.sort((a, b) => a - b);
+        expect(sortedArr).toEqual(arr);
       }
     });
   });
@@ -36,9 +39,13 @@ describe("mergeSort", () => {
     it("sorts large random arrays", () => {
       for (let _ = 0; _ < numTests; _++) {
         const arr = generateArray(N);
+        const arrCopy = [...arr];
         mergeSortInPlace(arr);
 
         expect(isSorted(arr)).toEqual(true);
+
+        arrCopy.sort((a, b) => a - b);
+        expect(arr).toEqual(arrCopy);
       }
     });
   });

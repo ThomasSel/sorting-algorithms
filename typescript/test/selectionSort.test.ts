@@ -17,9 +17,13 @@ describe("selectionSort", () => {
     it("sorts large random arrays", () => {
       for (let _ = 0; _ < numTests; _++) {
         const arr = generateArray(N);
+        const arrCopy = [...arr];
         const sortedArr = selectionSort(arr);
 
         expect(isSorted(sortedArr)).toEqual(true);
+
+        arrCopy.sort((a, b) => a - b);
+        expect(sortedArr).toEqual(arrCopy);
       }
     });
   });
@@ -36,9 +40,13 @@ describe("selectionSort", () => {
     it("sorts large random arrays", () => {
       for (let _ = 0; _ < numTests; _++) {
         const arr = generateArray(N);
+        const arrCopy = [...arr];
         selectionSortInPlace(arr);
 
         expect(isSorted(arr)).toEqual(true);
+
+        arrCopy.sort((a, b) => a - b);
+        expect(arr).toEqual(arrCopy);
       }
     });
   });
