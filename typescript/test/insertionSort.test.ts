@@ -1,4 +1,7 @@
-import { insertionSortInPlace, insertionSort } from "../src/insertionSort";
+import {
+  insertionSortInPlace,
+  insertionSort,
+} from "../src/sorting-algorithms/insertionSort";
 import { isSorted, generateArray } from "./utils";
 
 const N = 1000;

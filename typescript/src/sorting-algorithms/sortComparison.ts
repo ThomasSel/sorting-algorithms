@@ -1,6 +1,6 @@
-import { selectionSort, selectionSortInPlace } from "./selectionSort";
-import { insertionSort, insertionSortInPlace } from "./insertionSort";
-import { mergeSort, mergeSortInPlace } from "./mergeSort";
+import { selectionSort, selectionSortInPlace } from "./selectionSort.js";
+import { insertionSort, insertionSortInPlace } from "./insertionSort.js";
+import { mergeSort, mergeSortInPlace } from "./mergeSort.js";
 
 const N = 10000;
 const NUM_TESTS = 25;

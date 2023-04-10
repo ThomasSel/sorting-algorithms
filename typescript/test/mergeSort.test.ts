@@ -1,4 +1,7 @@
-import { mergeSort, mergeSortInPlace } from "../src/mergeSort";
+import {
+  mergeSort,
+  mergeSortInPlace,
+} from "../src/sorting-algorithms/mergeSort";
 import { isSorted, generateArray } from "./utils";
 
 const N = 1000;

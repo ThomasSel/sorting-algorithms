@@ -1,4 +1,7 @@
-import { selectionSortInPlace, selectionSort } from "../src/selectionSort";
+import {
+  selectionSortInPlace,
+  selectionSort,
+} from "../src/sorting-algorithms/selectionSort";
 import { isSorted, generateArray } from "./utils";
 
 const N = 1000;
