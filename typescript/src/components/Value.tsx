@@ -3,7 +3,7 @@ type ValueProps = {
 };
 
 const Value = (props: ValueProps): JSX.Element => {
-  return <div>{props.value}</div>;
+  return <div className="bg-green-200">{props.value}</div>;
 };
 
 export default Value;
