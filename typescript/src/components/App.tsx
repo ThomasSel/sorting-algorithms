@@ -14,10 +14,8 @@ function App(): JSX.Element {
 
   return (
     <main>
-      <section>
-        <h1>Sorting Algorithms</h1>
-        {values}
-      </section>
+      <h1>Sorting Algorithms</h1>
+      <div className="flex justify-center items-end">{values}</div>
     </main>
   );
 }
