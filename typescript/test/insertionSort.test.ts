@@ -31,19 +31,19 @@ describe("insertionSort", () => {
   });
 
   describe("in place", () => {
-    it("sorts a small array", () => {
+    it("sorts a small array", async () => {
       const arr = [13, 24, 5, 2, 1, 5, 664];
-      insertionSortInPlace(arr);
+      await insertionSortInPlace(arr);
 
       expect(arr).toEqual([1, 2, 5, 5, 13, 24, 664]);
       expect(isSorted(arr)).toEqual(true);
     });
 
-    it("sorts large random arrays", () => {
+    it("sorts large random arrays", async () => {
       for (let _ = 0; _ < numTests; _++) {
         const arr = generateArray(N);
         const arrCopy = [...arr];
-        insertionSortInPlace(arr);
+        await insertionSortInPlace(arr);
 
         expect(isSorted(arr)).toEqual(true);
 

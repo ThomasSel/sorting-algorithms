@@ -24,17 +24,17 @@ export const insertionSort = (arr: number[]): number[] => {
   return result;
 };
 
-export const insertionSortInPlace = (
-  arr: number[],
-  comp: (a: number, b: number) => boolean = (a, b) => a < b,
-  update: () => void = () => {}
-): void => {
+export const insertionSortInPlace = async <T>(
+  arr: T[],
+  comp: (a: T, b: T) => Promise<boolean> = (a, b) => Promise.resolve(a < b),
+  update: (newArr: T[]) => Promise<void> = () => Promise.resolve()
+): Promise<void> => {
   for (let sortedSize: number = 0; sortedSize < arr.length; sortedSize++) {
     const number = arr[sortedSize];
 
     let insertionIndex: number;
     for (insertionIndex = 0; insertionIndex < sortedSize; insertionIndex++) {
-      if (comp(number, arr[insertionIndex])) {
+      if (await comp(number, arr[insertionIndex])) {
         break;
       }
     }
@@ -44,7 +44,7 @@ export const insertionSortInPlace = (
     }
 
     arr[insertionIndex] = number;
-    update();
+    await update([...arr]);
   }
 };
 
