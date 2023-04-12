@@ -14,6 +14,7 @@ const generateValues = (): number[] => {
 
 function App(): JSX.Element {
   const [values, setValues] = useState(generateValues);
+  const [iterationSpeed, setIterationSpeed] = useState(250);
 
   const handleShuffle = (): void => {
     const newValues = [...values];
@@ -30,7 +31,7 @@ function App(): JSX.Element {
           setTimeout(() => {
             setValues(newValues);
             resolve();
-          }, 250);
+          }, iterationSpeed);
         });
       }
     );
@@ -56,6 +57,21 @@ function App(): JSX.Element {
           <button onClick={handleShuffle}>Shuffle</button>
           <button onClick={() => setValues(generateValues())}>Reset</button>
           <button onClick={insertionSort}>Insertion Sort</button>
+        </div>
+
+        <div id="sort-controls">
+          <div className="flex items-center">
+            <label htmlFor="iter-speed">Iteration speed (ms):</label>
+            <input
+              type="range"
+              name="iter-speed"
+              id="iter-speed"
+              min={1}
+              max={1000}
+              value={iterationSpeed}
+              onChange={(e) => setIterationSpeed(parseInt(e.target.value))}
+            />
+          </div>
         </div>
 
         <div>[{values.join(", ")}]</div>
