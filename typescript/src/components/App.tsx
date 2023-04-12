@@ -15,6 +15,7 @@ const generateValues = (): number[] => {
 function App(): JSX.Element {
   const [values, setValues] = useState(generateValues);
   const [iterationSpeed, setIterationSpeed] = useState(250);
+  const [sortInProgress, setSortInProgress] = useState(false);
 
   const handleShuffle = (): void => {
     const newValues = [...values];
@@ -22,19 +23,24 @@ function App(): JSX.Element {
     setValues(newValues);
   };
 
-  const insertionSort = (): void => {
-    insertionSortInPlace(
+  const insertionSort = async (): Promise<void> => {
+    setSortInProgress(true);
+
+    await insertionSortInPlace(
       values,
       (a, b) => Promise.resolve(a < b),
       (newValues) => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
           setTimeout(() => {
             setValues(newValues);
             resolve();
           }, iterationSpeed);
         });
       }
-    );
+    ).catch((error) => console.log(error));
+
+    setSortInProgress(false);
+    console.log("SORT FINISHED");
   };
 
   return (
@@ -54,9 +60,18 @@ function App(): JSX.Element {
         </ul>
 
         <div id="controls" className="flex justify-center items-center">
-          <button onClick={handleShuffle}>Shuffle</button>
-          <button onClick={() => setValues(generateValues())}>Reset</button>
-          <button onClick={insertionSort}>Insertion Sort</button>
+          {sortInProgress ? (
+            <>
+              <span>Sort in progress</span>
+              <button onClick={() => setSortInProgress(false)}>STOP</button>
+            </>
+          ) : (
+            <>
+              <button onClick={handleShuffle}>Shuffle</button>
+              <button onClick={() => setValues(generateValues())}>Reset</button>
+              <button onClick={insertionSort}>Insertion Sort</button>
+            </>
+          )}
         </div>
 
         <div id="sort-controls">
