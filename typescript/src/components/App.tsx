@@ -53,26 +53,9 @@ function App(): JSX.Element {
         </ul>
 
         <div id="controls" className="flex justify-center items-center">
-          <button
-            onClick={handleShuffle}
-            className="m-2 py-1 px-2 border-[1px] border-gray-400 rounded"
-          >
-            Shuffle
-          </button>
-
-          <button
-            onClick={() => setValues(generateValues())}
-            className="m-2 py-1 px-2 border-[1px] border-gray-400 rounded"
-          >
-            Reset
-          </button>
-
-          <button
-            onClick={insertionSort}
-            className="m-2 py-1 px-2 border-[1px] border-gray-400 rounded"
-          >
-            Insertion Sort
-          </button>
+          <button onClick={handleShuffle}>Shuffle</button>
+          <button onClick={() => setValues(generateValues())}>Reset</button>
+          <button onClick={insertionSort}>Insertion Sort</button>
         </div>
 
         <div>[{values.join(", ")}]</div>
