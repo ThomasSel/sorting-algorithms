@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Value from "./Value";
 import shuffle from "../utils";
+import { insertionSortInPlace } from "../sorting-algorithms/insertionSort";
 
 const N = 10;
 const generateValues = (): number[] => {
@@ -18,6 +19,21 @@ function App(): JSX.Element {
     const newValues = [...values];
     shuffle(newValues);
     setValues(newValues);
+  };
+
+  const insertionSort = (): void => {
+    insertionSortInPlace(
+      values,
+      (a, b) => Promise.resolve(a < b),
+      (newValues) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            setValues(newValues);
+            resolve();
+          }, 250);
+        });
+      }
+    );
   };
 
   return (
@@ -49,6 +65,13 @@ function App(): JSX.Element {
             className="m-2 py-1 px-2 border-[1px] border-gray-400 rounded"
           >
             Reset
+          </button>
+
+          <button
+            onClick={insertionSort}
+            className="m-2 py-1 px-2 border-[1px] border-gray-400 rounded"
+          >
+            Insertion Sort
           </button>
         </div>
 
