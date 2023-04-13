@@ -34,66 +34,32 @@ function App(): JSX.Element {
     }
   };
 
-  const insertionSort = async (): Promise<void> => {
-    setSortInProgress(true);
+  const handleSort = (
+    sortFn: (
+      arr: number[],
+      comp: (a: number, b: number) => Promise<boolean>,
+      update: (newArr: number[]) => Promise<void>
+    ) => Promise<void>
+  ): (() => Promise<void>) => {
+    return async () => {
+      setSortInProgress(true);
 
-    await insertionSortInPlace(
-      values,
-      (a, b) => Promise.resolve(a < b),
-      (newValues) => {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            setValues(newValues);
-            resolve();
-          }, iterationSpeed);
-        });
-      }
-    ).catch((error) => console.log(error));
+      await sortFn(
+        values,
+        (a, b) => Promise.resolve(a < b),
+        (newValues) => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setValues(newValues);
+              resolve();
+            }, iterationSpeed);
+          });
+        }
+      ).catch((error) => console.log(error));
 
-    setSortInProgress(false);
-    console.log("SORT FINISHED");
-  };
-
-  const selectionSort = async (): Promise<void> => {
-    setSortInProgress(true);
-
-    await selectionSortInPlace(
-      values,
-      (a, b) => Promise.resolve(a < b),
-      (newValues) => {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            setValues(newValues);
-            resolve();
-          }, iterationSpeed);
-        });
-      }
-    ).catch((error) => console.log(error));
-
-    setSortInProgress(false);
-    console.log("SORT FINISHED");
-  };
-
-  const mergeSort = async (): Promise<void> => {
-    setSortInProgress(true);
-
-    await mergeSortInPlace(
-      values,
-      0,
-      values.length,
-      (a, b) => Promise.resolve(a < b),
-      (newValues) => {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            setValues(newValues);
-            resolve();
-          }, iterationSpeed);
-        });
-      }
-    ).catch((error) => console.log(error));
-
-    setSortInProgress(false);
-    console.log("SORT FINISHED");
+      setSortInProgress(false);
+      console.log("SORT FINISHED");
+    };
   };
 
   return (
@@ -124,9 +90,13 @@ function App(): JSX.Element {
               <button onClick={() => setValues(generateValues(n))}>
                 Reset
               </button>
-              <button onClick={insertionSort}>Insertion Sort</button>
-              <button onClick={selectionSort}>Selection Sort</button>
-              <button onClick={mergeSort}>Merge Sort</button>
+              <button onClick={handleSort(insertionSortInPlace)}>
+                Insertion Sort
+              </button>
+              <button onClick={handleSort(selectionSortInPlace)}>
+                Selection Sort
+              </button>
+              <button onClick={handleSort(mergeSortInPlace)}>Merge Sort</button>
             </>
           )}
         </div>

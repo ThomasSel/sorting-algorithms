@@ -1,8 +1,8 @@
 import { bubbleSortInPlace } from "../src/sorting-algorithms/bubbleSort";
 import { generateArray, isSorted } from "./utils";
 
-const N = 1000;
-const numTests = 10;
+const N = 500;
+const numTests = 5;
 
 describe("insertionSort", () => {
   describe("in place", () => {

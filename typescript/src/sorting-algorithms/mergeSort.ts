@@ -32,10 +32,10 @@ export const mergeSort = (arr: number[]): number[] => {
 
 export const mergeSortInPlace = async <T>(
   arr: T[],
-  start: number = 0,
-  end: number = arr.length,
   comp: (a: T, b: T) => Promise<boolean> = (a, b) => Promise.resolve(a < b),
-  update: (newArr: T[]) => Promise<void> = () => Promise.resolve()
+  update: (newArr: T[]) => Promise<void> = () => Promise.resolve(),
+  start: number = 0,
+  end: number = arr.length
 ): Promise<void> => {
   const sliceLength = end - start;
 
@@ -46,17 +46,17 @@ export const mergeSortInPlace = async <T>(
   // sort left and right arrays
   await mergeSortInPlace(
     arr,
-    start,
-    start + Math.floor(sliceLength / 2),
     comp,
-    update
+    update,
+    start,
+    start + Math.floor(sliceLength / 2)
   );
   await mergeSortInPlace(
     arr,
-    start + Math.floor(sliceLength / 2),
-    end,
     comp,
-    update
+    update,
+    start + Math.floor(sliceLength / 2),
+    end
   );
 
   // temp array to store merged sub arrays
