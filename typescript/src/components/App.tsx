@@ -2,6 +2,7 @@ import { useState } from "react";
 import Value from "./Value";
 import shuffle from "../utils";
 import { insertionSortInPlace } from "../sorting-algorithms/insertionSort";
+import { selectionSortInPlace } from "../sorting-algorithms/selectionSort";
 
 const N = 10;
 const generateValues = (): number[] => {
@@ -27,6 +28,26 @@ function App(): JSX.Element {
     setSortInProgress(true);
 
     await insertionSortInPlace(
+      values,
+      (a, b) => Promise.resolve(a < b),
+      (newValues) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            setValues(newValues);
+            resolve();
+          }, iterationSpeed);
+        });
+      }
+    ).catch((error) => console.log(error));
+
+    setSortInProgress(false);
+    console.log("SORT FINISHED");
+  };
+
+  const selectionSort = async (): Promise<void> => {
+    setSortInProgress(true);
+
+    await selectionSortInPlace(
       values,
       (a, b) => Promise.resolve(a < b),
       (newValues) => {
@@ -70,6 +91,7 @@ function App(): JSX.Element {
               <button onClick={handleShuffle}>Shuffle</button>
               <button onClick={() => setValues(generateValues())}>Reset</button>
               <button onClick={insertionSort}>Insertion Sort</button>
+              <button onClick={selectionSort}>Selection Sort</button>
             </>
           )}
         </div>

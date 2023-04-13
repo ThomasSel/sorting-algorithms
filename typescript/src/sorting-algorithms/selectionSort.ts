@@ -20,15 +20,15 @@ export const selectionSort = (arr: number[]): number[] => {
   return result;
 };
 
-export const selectionSortInPlace = (
-  arr: number[],
-  comp: (a: number, b: number) => boolean = (a, b) => a < b,
-  update: () => void = () => {}
+export const selectionSortInPlace = async <T>(
+  arr: T[],
+  comp: (a: T, b: T) => Promise<boolean> = (a, b) => Promise.resolve(a < b),
+  update: (newArr: T[]) => Promise<void> = () => Promise.resolve()
 ) => {
   for (let i = 0; i < arr.length; i++) {
     let min = { value: arr[i], index: i };
     for (let j = i; j < arr.length; j++) {
-      if (comp(arr[j], min.value)) {
+      if (await comp(arr[j], min.value)) {
         min.value = arr[j];
         min.index = j;
       }
@@ -37,7 +37,7 @@ export const selectionSortInPlace = (
     arr[min.index] = arr[i];
     arr[i] = min.value;
 
-    update();
+    await update([...arr]);
   }
 };
 
