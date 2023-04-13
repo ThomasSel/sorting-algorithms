@@ -37,6 +37,7 @@ describe("mergeSort", () => {
 
       expect(arr).toEqual([1, 2, 5, 5, 13, 24, 664]);
       expect(isSorted(arr)).toEqual(true);
+      expect(arr.length).toEqual(7);
     });
 
     it("sorts large random arrays", async () => {
@@ -46,6 +47,7 @@ describe("mergeSort", () => {
         await mergeSortInPlace(arr);
 
         expect(isSorted(arr)).toEqual(true);
+        expect(arr.length).toEqual(N);
 
         arrCopy.sort((a, b) => a - b);
         expect(arr).toEqual(arrCopy);

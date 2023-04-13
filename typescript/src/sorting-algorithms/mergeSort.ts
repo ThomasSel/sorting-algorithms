@@ -90,8 +90,9 @@ export const mergeSortInPlace = async <T>(
 
   for (let i = 0; i < sliceLength; i++) {
     arr[start + i] = temp[i];
-    update([...arr]);
   }
+
+  await update([...arr]);
 };
 
 export default mergeSort;
