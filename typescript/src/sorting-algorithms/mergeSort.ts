@@ -30,13 +30,13 @@ export const mergeSort = (arr: number[]): number[] => {
   }
 };
 
-export const mergeSortInPlace = (
-  arr: number[],
+export const mergeSortInPlace = async <T>(
+  arr: T[],
   start: number = 0,
   end: number = arr.length,
-  comp: (a: number, b: number) => boolean = (a, b) => a < b,
-  update: () => void = () => {}
-): void => {
+  comp: (a: T, b: T) => Promise<boolean> = (a, b) => Promise.resolve(a < b),
+  update: (newArr: T[]) => Promise<void> = () => Promise.resolve()
+): Promise<void> => {
   const sliceLength = end - start;
 
   if (sliceLength < 2) {
@@ -44,28 +44,31 @@ export const mergeSortInPlace = (
   }
 
   // sort left and right arrays
-  mergeSortInPlace(
+  await mergeSortInPlace(
     arr,
     start,
     start + Math.floor(sliceLength / 2),
     comp,
     update
   );
-  mergeSortInPlace(arr, start + Math.floor(sliceLength / 2), end, comp, update);
+  await mergeSortInPlace(
+    arr,
+    start + Math.floor(sliceLength / 2),
+    end,
+    comp,
+    update
+  );
 
   // temp array to store merged sub arrays
-  const temp: number[] = [];
+  const temp: T[] = [];
   let leftIndex = start;
   let rightIndex = start + Math.floor(sliceLength / 2);
 
-  while (leftIndex < start + Math.floor(sliceLength / 2) || rightIndex < end) {
-    const leftValue =
-      leftIndex >= start + Math.floor(sliceLength / 2)
-        ? Infinity
-        : arr[leftIndex];
-    const rightValue = rightIndex >= end ? Infinity : arr[rightIndex];
+  while (leftIndex < start + Math.floor(sliceLength / 2) && rightIndex < end) {
+    const leftValue = arr[leftIndex];
+    const rightValue = arr[rightIndex];
 
-    if (leftValue <= rightValue) {
+    if (await comp(leftValue, rightValue)) {
       temp.push(leftValue);
       leftIndex++;
     } else {
@@ -73,12 +76,22 @@ export const mergeSortInPlace = (
       rightIndex++;
     }
   }
+  if (leftIndex >= start + Math.floor(sliceLength / 2)) {
+    while (rightIndex < end) {
+      temp.push(arr[rightIndex]);
+      rightIndex++;
+    }
+  } else if (rightIndex >= end) {
+    while (leftIndex < start + Math.floor(sliceLength / 2)) {
+      temp.push(arr[leftIndex]);
+      leftIndex++;
+    }
+  }
 
   for (let i = 0; i < sliceLength; i++) {
     arr[start + i] = temp[i];
+    update([...arr]);
   }
-
-  update();
 };
 
 export default mergeSort;
