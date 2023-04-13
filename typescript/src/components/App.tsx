@@ -5,17 +5,17 @@ import { insertionSortInPlace } from "../sorting-algorithms/insertionSort";
 import { selectionSortInPlace } from "../sorting-algorithms/selectionSort";
 import { mergeSortInPlace } from "../sorting-algorithms/mergeSort";
 
-const N = 100;
-const generateValues = (): number[] => {
+const generateValues = (n: number): number[] => {
   const values: number[] = [];
-  for (let i = 0; i < N; i++) {
+  for (let i = 0; i < n; i++) {
     values.push(i);
   }
   return values;
 };
 
 function App(): JSX.Element {
-  const [values, setValues] = useState(generateValues);
+  const [n, setN] = useState(30);
+  const [values, setValues] = useState(() => generateValues(n));
   const [iterationSpeed, setIterationSpeed] = useState(250);
   const [sortInProgress, setSortInProgress] = useState(false);
 
@@ -23,6 +23,15 @@ function App(): JSX.Element {
     const newValues = [...values];
     shuffle(newValues);
     setValues(newValues);
+  };
+
+  const handleNChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const newN = parseInt(e.target.value);
+    setN(newN);
+
+    if (0 < newN && newN <= 1000) {
+      setValues(generateValues(newN));
+    }
   };
 
   const insertionSort = async (): Promise<void> => {
@@ -112,7 +121,9 @@ function App(): JSX.Element {
           ) : (
             <>
               <button onClick={handleShuffle}>Shuffle</button>
-              <button onClick={() => setValues(generateValues())}>Reset</button>
+              <button onClick={() => setValues(generateValues(n))}>
+                Reset
+              </button>
               <button onClick={insertionSort}>Insertion Sort</button>
               <button onClick={selectionSort}>Selection Sort</button>
               <button onClick={mergeSort}>Merge Sort</button>
@@ -122,7 +133,9 @@ function App(): JSX.Element {
 
         <div id="sort-controls">
           <div className="flex items-center">
-            <label htmlFor="iter-speed">Iteration speed (ms):</label>
+            <label htmlFor="iter-speed" className="mr-2">
+              Iteration speed (ms):
+            </label>
             <input
               type="range"
               name="iter-speed"
@@ -133,9 +146,25 @@ function App(): JSX.Element {
               onChange={(e) => setIterationSpeed(parseInt(e.target.value))}
             />
           </div>
+
+          <div className="flex items-center">
+            <label htmlFor="num-values" className="mr-2">
+              Number of Values:
+            </label>
+            <input
+              type="number"
+              name="num-values"
+              id="num-values"
+              min={1}
+              max={1000}
+              value={n}
+              onChange={handleNChange}
+              className="typing-input"
+            />
+          </div>
         </div>
 
-        <div>[{values.join(", ")}]</div>
+        {/* <div>[{values.join(", ")}]</div> */}
       </div>
     </main>
   );

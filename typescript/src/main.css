@@ -3,7 +3,13 @@
 @tailwind utilities;
 
 @layer base {
-    button {
-        @apply m-2 py-1 px-2 border-[1px] border-gray-400 rounded
-    }
+  button {
+    @apply m-2 py-1 px-2 border-[1px] border-gray-400 rounded;
+  }
+}
+
+@layer components {
+  .typing-input {
+    @apply pl-1 border-[1px] border-gray-400 rounded;
+  }
 }
