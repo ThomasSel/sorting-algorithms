@@ -5,7 +5,7 @@ import { insertionSortInPlace } from "../sorting-algorithms/insertionSort";
 import { selectionSortInPlace } from "../sorting-algorithms/selectionSort";
 import { mergeSortInPlace } from "../sorting-algorithms/mergeSort";
 
-const N = 10;
+const N = 100;
 const generateValues = (): number[] => {
   const values: number[] = [];
   for (let i = 0; i < N; i++) {
@@ -96,10 +96,10 @@ function App(): JSX.Element {
       <div className="flex flex-col items-center">
         <ul
           id="sorting-container"
-          className="flex justify-center items-end p-6 border-[1px] border-gray-600 rounded-xl mb-2"
+          className="flex justify-center items-end w-[80rem] h-52 p-6 border-[1px] border-gray-600 rounded-xl mb-2"
         >
           {values.map((value) => (
-            <Value value={value} key={value} />
+            <Value value={value} numValues={values.length} key={value} />
           ))}
         </ul>
 
