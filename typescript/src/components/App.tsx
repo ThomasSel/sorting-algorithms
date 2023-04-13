@@ -4,6 +4,7 @@ import shuffle from "../utils";
 import { insertionSortInPlace } from "../sorting-algorithms/insertionSort";
 import { selectionSortInPlace } from "../sorting-algorithms/selectionSort";
 import { mergeSortInPlace } from "../sorting-algorithms/mergeSort";
+import { bubbleSortInPlace } from "../sorting-algorithms/bubbleSort";
 
 const generateValues = (n: number): number[] => {
   const values: number[] = [];
@@ -97,6 +98,9 @@ function App(): JSX.Element {
                 Selection Sort
               </button>
               <button onClick={handleSort(mergeSortInPlace)}>Merge Sort</button>
+              <button onClick={handleSort(bubbleSortInPlace)}>
+                Bubble Sort
+              </button>
             </>
           )}
         </div>
