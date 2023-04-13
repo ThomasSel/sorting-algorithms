@@ -3,6 +3,7 @@ import Value from "./Value";
 import shuffle from "../utils";
 import { insertionSortInPlace } from "../sorting-algorithms/insertionSort";
 import { selectionSortInPlace } from "../sorting-algorithms/selectionSort";
+import { mergeSortInPlace } from "../sorting-algorithms/mergeSort";
 
 const N = 10;
 const generateValues = (): number[] => {
@@ -64,6 +65,28 @@ function App(): JSX.Element {
     console.log("SORT FINISHED");
   };
 
+  const mergeSort = async (): Promise<void> => {
+    setSortInProgress(true);
+
+    await mergeSortInPlace(
+      values,
+      0,
+      values.length,
+      (a, b) => Promise.resolve(a < b),
+      (newValues) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            setValues(newValues);
+            resolve();
+          }, iterationSpeed);
+        });
+      }
+    ).catch((error) => console.log(error));
+
+    setSortInProgress(false);
+    console.log("SORT FINISHED");
+  };
+
   return (
     <main>
       <h1 className="flex justify-center text-3xl mt-6 mb-4">
@@ -92,6 +115,7 @@ function App(): JSX.Element {
               <button onClick={() => setValues(generateValues())}>Reset</button>
               <button onClick={insertionSort}>Insertion Sort</button>
               <button onClick={selectionSort}>Selection Sort</button>
+              <button onClick={mergeSort}>Merge Sort</button>
             </>
           )}
         </div>
