@@ -57,28 +57,87 @@ const timeNotInPlace = async (times: SortingTimes) => {
 };
 
 const timeInPlace = async (times: SortingTimes) => {
-  let time, updateCalls;
-  updateCalls = 0;
+  let time;
+
   time = await timeSortingFunction(async (arr) => {
     await insertionSortInPlace(arr);
     return arr;
   });
   times.insertionSort = time;
+
   time = await timeSortingFunction(async (arr) => {
     await selectionSortInPlace(arr);
     return arr;
   });
   times.selectionSort = time;
+
   time = await timeSortingFunction(async (arr) => {
     await mergeSortInPlace(arr);
     return arr;
   });
   times.mergeSort = time;
+
   time = await timeSortingFunction(async (arr) => {
     await bubbleSortInPlace(arr);
     return arr;
   });
   times.bubbleSort = time;
+};
+
+const countUpdateCalls = async () => {
+  let count: number;
+
+  count = 0;
+  await timeSortingFunction(async (arr) => {
+    await insertionSortInPlace(
+      arr,
+      async (a, b) => a < b,
+      async (arr) => {
+        count++;
+      }
+    );
+    return arr;
+  });
+  console.log(`insertionSort: Avg update calls ${count / NUM_TESTS}`);
+
+  count = 0;
+  await timeSortingFunction(async (arr) => {
+    await selectionSortInPlace(
+      arr,
+      async (a, b) => a < b,
+      async (arr) => {
+        count++;
+      }
+    );
+    return arr;
+  });
+  console.log(`selectionSort: Avg update calls ${count / NUM_TESTS}`);
+
+  count = 0;
+  await timeSortingFunction(async (arr) => {
+    await mergeSortInPlace(
+      arr,
+      async (a, b) => a < b,
+      async (arr) => {
+        count++;
+      }
+    );
+    return arr;
+  });
+  console.log(`mergeSort: Avg update calls ${count / NUM_TESTS}`);
+
+  count = 0;
+  await timeSortingFunction(async (arr) => {
+    await bubbleSortInPlace(
+      arr,
+      async (a, b) => a < b,
+      async (arr) => {
+        count++;
+      }
+    );
+    return arr;
+  });
+  console.log(`bubbleSort: Avg update calls ${count / NUM_TESTS}`);
 };
 
 const normalTimes: SortingTimes = {};
@@ -98,4 +157,8 @@ timeNotInPlace(normalTimes)
     console.log(`selectionSort: Avg Time (ms) ${inPlaceTimes.selectionSort}`);
     console.log(`mergeSort: Avg Time (ms) ${inPlaceTimes.mergeSort}`);
     console.log(`bubbleSort: Avg Time (ms) ${inPlaceTimes.bubbleSort}`);
+  })
+  .then(() => {
+    console.log("UPDATE CALLS");
+    countUpdateCalls();
   });
