@@ -1,4 +1,5 @@
 const selectionSort = (arr) => {
+  arr = [...arr];
   const result = [];
 
   while (arr.length > 0) {
