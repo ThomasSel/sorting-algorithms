@@ -23,6 +23,16 @@ In order to compare the performance of all three algorithms, navigate to the rus
 cargo run
 ```
 
+Note that this command does not optimise the code when compiling.
+As a result the timings will be slow relative to javascript and typescript.
+If you want to compile the code with optimisations, run
+
+```
+cargo run --release
+```
+
+instead.
+
 In addition to these, there is a basic `BinaryTree` struct with a view of using this for Heap sort.
 
 **Note**: _this implementation is incomplete and doesn't support generic binary trees and only can represent trees filled from left to right._
