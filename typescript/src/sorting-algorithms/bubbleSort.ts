@@ -13,10 +13,9 @@ export const bubbleSortInPlace = async <T>(
         arr[i - 1] = arr[i];
         arr[i] = temp;
 
-        await update([...arr]);
-
         sorted = false;
       }
     }
+    await update([...arr]);
   }
 };
